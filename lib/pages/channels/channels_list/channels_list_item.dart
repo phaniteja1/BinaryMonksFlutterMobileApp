@@ -13,17 +13,19 @@ class ChannelsListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final addChannelButton = FlatButton(
-      child: const Text('ADD CHANNEL', style: TextStyle(color: Colors.green),),
+    final addChannelButton = RaisedButton(
+      color: Colors.green,
+      child: const Text('ADD CHANNEL', style: TextStyle(color: Colors.white)),
       onPressed: () =>_addChannelAction(_feedItem.channel),
     );
 
-    final removeChannelButton = FlatButton(
-      child: const Text('REMOVE CHANNEL', style: TextStyle(color: Colors.red),),
+    final removeChannelButton = RaisedButton(
+      color: Colors.red,
+      child: const Text('REMOVE CHANNEL', style: TextStyle(color: Colors.white)),
       onPressed: () => _removeChannelAction(_feedItem.channel),
     );
 
-    var displayButton = FlatButton(
+    var displayButton = RaisedButton(
       child: const Text('LOADING...'),
       onPressed: _doNothing,
     );

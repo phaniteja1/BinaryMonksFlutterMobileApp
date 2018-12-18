@@ -24,16 +24,17 @@ class FeedsAsyncState extends State<FeedsAsync> {
   List data;
   List userChannels;
   bool showBottomBar = false;
+  final flutterWebviewPlugin = new FlutterWebviewPlugin();
 
   void fetchPost() async {
     final url = await getUrl();
     final response = await http.get(url);
+    var dataConvertedToJSON = json.decode(response.body);
 
     // To modify the state of the app, use this method
     if (this.mounted) {
       setState(() {
         // Get the JSON data
-        var dataConvertedToJSON = json.decode(response.body);
         // Extract the required part and assign it to the global variable named data
         data = dataConvertedToJSON;
         showBottomBar = false;
@@ -68,7 +69,6 @@ class FeedsAsyncState extends State<FeedsAsync> {
         showBottomBar = true;
       });
 
-      final flutterWebviewPlugin = new FlutterWebviewPlugin();
       flutterWebviewPlugin.launch(
         url,
         rect: new Rect.fromLTWH(
@@ -82,8 +82,7 @@ class FeedsAsyncState extends State<FeedsAsync> {
   }
 
   _closeWebView() {
-    if (this.mounted) {
-      final flutterWebviewPlugin = new FlutterWebviewPlugin();
+    if (this.mounted && showBottomBar) {
       flutterWebviewPlugin.close();
       setState(() {
         showBottomBar = false;
@@ -110,6 +109,6 @@ class FeedsAsyncState extends State<FeedsAsync> {
   @override
   void initState() {
     super.initState();
-    this.fetchPost();
+    fetchPost();
   }
 }
